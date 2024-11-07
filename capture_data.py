@@ -28,7 +28,7 @@ while True:
     if not os.path.exists(alphabet_dir):
         os.makedirs(alphabet_dir)
     
-    # Count number of existing images to avoid overwriting on it
+    # Count number of existing images to avoid overwriting to it
     existing_images = len(os.listdir(alphabet_dir))
 
     print(f'Collecting data for alphabet {alphabet}')
@@ -82,7 +82,7 @@ while True:
 	    # Apply Gaussian Blur (optional)
         roi = cv2.GaussianBlur(roi, (5, 5), 0)
 
-        # Resize to 50x50 pixels
+        # Resize to 48x48 pixels
         roi = cv2.resize(roi, (50, 50))
         
         # Show the mirrored frame with the ROI rectangle
