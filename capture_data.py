@@ -1,8 +1,8 @@
 import os
 import cv2
 
-data_dir = './data'
-limit = 600
+data_dir = './dataset'
+limit = 200
 
 # Create data directory if it doesn't exist
 if not os.path.exists(data_dir):
@@ -28,7 +28,7 @@ while True:
     if not os.path.exists(alphabet_dir):
         os.makedirs(alphabet_dir)
     
-    # Count number of existing images to avoid overwriting to it
+    # Count number of existing images to avoid overwriting on it
     existing_images = len(os.listdir(alphabet_dir))
 
     print(f'Collecting data for alphabet {alphabet}')
@@ -76,6 +76,15 @@ while True:
         # Crop the ROI
         roi = frame[roi_top_left_y:roi_top_left_y + roi_height, roi_top_left_x:roi_top_left_x + roi_width]
 
+	    # Convert to grayscale
+        roi = cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
+	
+	    # Apply Gaussian Blur (optional)
+        roi = cv2.GaussianBlur(roi, (5, 5), 0)
+
+        # Resize to 50x50 pixels
+        roi = cv2.resize(roi, (50, 50))
+        
         # Show the mirrored frame with the ROI rectangle
         cv2.imshow('frame', frame)
         
