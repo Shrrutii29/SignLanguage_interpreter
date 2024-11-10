@@ -33,12 +33,6 @@ while True:
 
     print(f'Collecting data for alphabet {alphabet}')
     
-    # ROI (Region of Interest)
-    roi_top_left_x = 0
-    roi_top_left_y = 50
-    roi_width = 350
-    roi_height = 350
-
     # Wait till '#' is entered
     while True:
         ret, frame = camera.read()
@@ -50,8 +44,8 @@ while True:
         frame = cv2.flip(frame, 1)
 
         # Display instruction and ROI rectangle
-        cv2.putText(frame, 'Press # to start', (150, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255))
-        cv2.rectangle(frame, (roi_top_left_x, roi_top_left_y), (roi_top_left_x + roi_width, roi_top_left_y + roi_height), (0, 255, 0), 2)
+        cv2.putText(frame, 'Press # to start', (10, 30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
+        cv2.rectangle(frame, (0, 40), (300, 300), (255, 255, 255), 2)
 
         cv2.imshow('frame', frame)
         
@@ -71,33 +65,28 @@ while True:
         frame = cv2.flip(frame, 1)
 
         # Display ROI rectangle
-        cv2.rectangle(frame, (roi_top_left_x, roi_top_left_y), (roi_top_left_x + roi_width, roi_top_left_y + roi_height), (0, 255, 0), 2)
+        cv2.rectangle(frame, (0, 40), (300, 300), (255, 255, 255), 2)
 
         # Crop the ROI
-        roi = frame[roi_top_left_y:roi_top_left_y + roi_height, roi_top_left_x:roi_top_left_x + roi_width]
+        cropframe = frame[40:300, 0:300]
 
-	    # Convert to grayscale
-        roi = cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
-	
-	    # Apply Gaussian Blur (optional)
-        roi = cv2.GaussianBlur(roi, (5, 5), 0)
+        # Convert to grayscale and resize for model input
+        cropframe = cv2.cvtColor(cropframe, cv2.COLOR_BGR2GRAY)
+        cropframe = cv2.resize(cropframe, (50, 50))
 
-        # Resize to 48x48 pixels
-        roi = cv2.resize(roi, (50, 50))
-        
         # Show the mirrored frame with the ROI rectangle
         cv2.imshow('frame', frame)
         
         # Display the cropped ROI in a separate window
-        cv2.imshow('ROI', roi)
+        cv2.imshow('ROI', cropframe)
 
         cv2.waitKey(40)
 
         # Save cropped ROI image
-        cv2.imwrite(os.path.join(alphabet_dir, '{}.jpg'.format(counter)), roi)
+        cv2.imwrite(os.path.join(alphabet_dir, '{}.jpg'.format(counter)), cropframe)
         counter += 1
     
-    # Display 'Done' message
+    # Acknowledge
     print(f"Done collecting data for {alphabet}")
 
 # Release camera
