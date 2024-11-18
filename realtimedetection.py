@@ -8,7 +8,7 @@ with open("signLanguageInterpreter.json", "r") as json_file:
     model = model_from_json(json_file.read())
 model.load_weights("signLanguageInterpreter.keras")
 
-# Function to preprocess input image
+# preprocess input image
 def extract_features(image):
     feature = np.array(image).reshape(1, 50, 50, 1)
     return feature / 255.0
@@ -41,14 +41,14 @@ while True:
     pred = model.predict(roi_features)
     prediction_label = labels[pred.argmax()]
 
-    # Check if the gesture is consistent for required frames
+    # 
     if prediction_label == prev_label:
-        frame_counter += 1
+        cnt += 1
     else:
-        frame_counter = 0
+        cnt = 0
 
-    # Confirm the gesture after 
-    if frame_counter >= 25:
+    # Confirm gesture after prediction is consistent for 25
+    if cnt >= 25:
         if prediction_label == 'space':
             sentence += ' '
         elif prediction_label == 'blank':
@@ -56,7 +56,7 @@ while True:
         else:
             sentence += prediction_label
 
-        frame_counter = 0
+        cnt = 0
 
     prev_label = prediction_label
 
@@ -64,7 +64,7 @@ while True:
     lines = textwrap.wrap(sentence, width = 40)
 
     # Sentence Label
-    lines.insert(0, "Sentences : ")
+    lines.insert(0, "Translation : ")
 
     # sentence block
     block_height = 20 * (len(lines) + 1)
@@ -75,7 +75,7 @@ while True:
         y_pos = frame.shape[0] - block_height + (20 * i) + 15
         cv2.putText(frame, line, (10, y_pos), cv2.FONT_HERSHEY_COMPLEX, 0.6, (255, 255, 255), 1)
         
-    # Display the current prediction
+    # Display current prediction
     cv2.putText(frame, f'Current: {prediction_label}', (10, 30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 0, 0), 2)
 
     cv2.imshow("Sign Language Interpreter", frame)

@@ -19,7 +19,7 @@ while True:
     # Get input from user
     alphabet = input("Enter alphabet to collect images (press -1 to stop): ")
     
-    # Stop the session if the user enters '-1'
+    # Stop execution if the user enters '-1'
     if alphabet == '-1':
         break
     
@@ -43,7 +43,7 @@ while True:
         # Mirror frame
         frame = cv2.flip(frame, 1)
 
-        # Display instruction and ROI rectangle
+        # Display message and ROI rectangle
         cv2.putText(frame, 'Press # to start', (10, 30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 255, 0), 2)
         cv2.rectangle(frame, (0, 40), (300, 300), (255, 255, 255), 2)
 
@@ -70,14 +70,14 @@ while True:
         # Crop the ROI
         cropframe = frame[40:300, 0:300]
 
-        # Convert to grayscale and resize for model input
+        # Convert to grayscale and resize input
         cropframe = cv2.cvtColor(cropframe, cv2.COLOR_BGR2GRAY)
         cropframe = cv2.resize(cropframe, (50, 50))
 
-        # Show the mirrored frame with the ROI rectangle
+        # Show frame
         cv2.imshow('frame', frame)
         
-        # Display the cropped ROI in a separate window
+        # Show cropped ROI
         cv2.imshow('ROI', cropframe)
 
         cv2.waitKey(40)
