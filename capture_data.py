@@ -64,7 +64,7 @@ while True:
         # Mirror frame
         frame = cv2.flip(frame, 1)
 
-        # Display ROI rectangle
+        # ROI rectangle
         cv2.rectangle(frame, (0, 40), (300, 300), (255, 255, 255), 2)
 
         # Crop the ROI
