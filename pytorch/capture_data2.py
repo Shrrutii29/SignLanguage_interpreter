@@ -29,7 +29,6 @@ def remove_background_and_extract_hand(image):
     
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
-            # Get the bounding box of the hand
             x_min = min([landmark.x for landmark in hand_landmarks.landmark]) * image.shape[1]
             x_max = max([landmark.x for landmark in hand_landmarks.landmark]) * image.shape[1]
             y_min = min([landmark.y for landmark in hand_landmarks.landmark]) * image.shape[0]

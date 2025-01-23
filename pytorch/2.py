@@ -66,7 +66,7 @@ transform = transforms.Compose([
 
 # Labels for predictions
 labels = ['A', 'B', 'C', 'D', 'E', 'F', 'space']
-confidence_threshold = 0.95
+confidence_threshold = 0.9
 
 # MediaPipe initialization for hand detection
 mp_hands = mp.solutions.hands
