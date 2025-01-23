@@ -99,7 +99,6 @@ while True:
 
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
-            # Get the bounding box of the hand
             x_min = int(min([landmark.x for landmark in hand_landmarks.landmark]) * roi.shape[1])
             x_max = int(max([landmark.x for landmark in hand_landmarks.landmark]) * roi.shape[1])
             y_min = int(min([landmark.y for landmark in hand_landmarks.landmark]) * roi.shape[0])

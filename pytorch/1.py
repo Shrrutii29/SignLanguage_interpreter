@@ -50,7 +50,7 @@ class SignLanguageCNN(nn.Module):
 # Load model
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = SignLanguageCNN().to(device)
-model.load_state_dict(torch.load("signLanguageInterpreter.pth", map_location=device))
+model.load_state_dict(torch.load("signLanguageInterpreter2.pth", map_location=device))
 
 # evaluate model
 model.eval()
